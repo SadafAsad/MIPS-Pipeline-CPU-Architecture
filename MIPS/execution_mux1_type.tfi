@@ -1,0 +1,12 @@
+
+
+
+// Instantiate the module
+execution_mux1_type instance_name (
+    .read_data(read_data), 
+    .sign_extend(sign_extend), 
+    .ALUSrc(ALUSrc), 
+    .result(result)
+    );
+
+

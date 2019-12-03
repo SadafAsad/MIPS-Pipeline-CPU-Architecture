@@ -1,0 +1,11 @@
+
+
+
+// Instantiate the module
+execution_alu_control instance_name (
+    .ALUOp(ALUOp), 
+    .funct(funct), 
+    .select(select)
+    );
+
+

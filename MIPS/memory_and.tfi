@@ -1,0 +1,11 @@
+
+
+
+// Instantiate the module
+memory_and instance_name (
+    .branch(branch), 
+    .zero(zero), 
+    .PCSrc(PCSrc)
+    );
+
+

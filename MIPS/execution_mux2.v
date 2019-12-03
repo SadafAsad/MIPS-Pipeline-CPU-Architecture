@@ -30,12 +30,12 @@ module execution_mux2(ins_20_16, ins_15_11, RegDst, result);
 	
 		if(RegDst)
 		begin
-			result <= ins_20_16;
+			result <= ins_15_11;
 		end
 			
 		else
 		begin
-			result <= ins_15_11;
+			result <= ins_20_16;
 		end
 			
 	end

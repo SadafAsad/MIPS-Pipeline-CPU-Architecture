@@ -66,7 +66,7 @@ module execution_module(RegDst, ALUOp1, ALUOp2, ALUSrc, fromIFstage, sign_extend
     .A(read_data1), 
     .B(mux_1_to_alu), 
     .control(alu_control_result), 
-    .result(result), 
+    .result(alu_result), 
     .zero(zero_out)
     );
 	 

@@ -40,7 +40,7 @@ module memory_module(AddResult, ALUResult, read_data2, exeMuxRes, aluZero,
 	memory_and And (
     .branch(Branch), 
     .zero(aluZero), 
-    .PCSrc(PCSrc)
+    .PCSrc(PCSrc_out)
     );
 	 
 	memory_data_memory Data_memory (

@@ -29,14 +29,14 @@ module write_back_mux(data, address, MemtoReg, writeData);
 	begin
 	
 		if (MemtoReg)
-			begin
-				writeData <= data;
-			end
+		begin
+			writeData <= data;
+		end
 			
-			else
-			begin
-				writeData <= address;
-			end
+		else
+		begin
+			writeData <= address;
+		end
 			
 	end
 

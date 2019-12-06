@@ -1,0 +1,11 @@
+
+
+
+// Instantiate the module
+fetch_add instance_name (
+    .add_in(add_in), 
+    .add_out(add_out), 
+    .hit(hit)
+    );
+
+

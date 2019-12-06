@@ -1,0 +1,12 @@
+
+
+
+// Instantiate the module
+fetch_mux instance_name (
+    .add_result(add_result), 
+    .branch_result(branch_result), 
+    .PCSrc(PCSrc), 
+    .instruction_address(instruction_address)
+    );
+
+

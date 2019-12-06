@@ -26,12 +26,10 @@ module decode_registers(clk, rs_1, rt_2, rd_w, writeData, regWrite, read_data1, 
 	
 	output reg [31:0] read_data1, read_data2;
 	
-	reg [31:0] registers [2:0];
+	reg [31:0] registers [31:0];
 		
 	always @(posedge clk)
 	begin
-		registers[0] <= 32'b00000000000000000000000000000000;
-		registers[1] <= 32'b00000000000000000000000000001111;
 		if (regWrite)
 		begin
 			registers[rd_w] <= writeData;

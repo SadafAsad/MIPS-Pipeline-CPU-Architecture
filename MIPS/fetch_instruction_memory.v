@@ -42,7 +42,7 @@ module fetch_instruction_memory(address, mem_in, instruction, hit, clk, rst);
 	always @(posedge clk)
 	begin
 		
-		if (cache[set][152] != 1)
+		if (cache[set][152] != 1 || counter != 0)
 		begin
 			if (counter != 8)
 			begin
@@ -65,23 +65,51 @@ module fetch_instruction_memory(address, mem_in, instruction, hit, clk, rst);
 			counter <= 4'b0000;
 		end
 		
-		else if (cache[set][151:128] == tag)
+		if (counter == 0 || counter == 8)
 		begin
 			
-			if (cache[set][152] == 1)
+			if (cache[set][151:128] == tag)
 			begin
-				hit <= 1;
-				case(offset)
-					2'b00: instruction <= cache[set][31:0];
-					2'b01: instruction <= cache[set][63:32]; 
-					2'b10: instruction <= cache[set][95:64];
-					2'b11: instruction <= cache[set][127:96];
-				endcase
-			end
+			
+				if (cache[set][152] == 1)
+				begin
+					hit <= 1;
+					case(offset)
+						2'b00: instruction <= cache[set][31:0];
+						2'b01: instruction <= cache[set][63:32]; 
+						2'b10: instruction <= cache[set][95:64];
+						2'b11: instruction <= cache[set][127:96];
+					endcase
+				end
 				
+				else
+				begin
+				
+					if (counter == 8)
+					begin
+						counter <= 4'b0000;
+						cache[set][152] <= 1;
+						hit <= 1;
+						cache [set][31:0] <= mem_in[31:0];
+						cache [set][63:32] <= mem_in[63:32];
+						cache [set][95:64] <= mem_in[95:64];
+						cache [set][127:96] <= mem_in[127:96];
+					
+						case(offset)
+							2'b00: instruction <= cache[set][31:0];
+							2'b01: instruction <= cache[set][63:32]; 
+							2'b10: instruction <= cache[set][95:64];
+							2'b11: instruction <= cache[set][127:96];
+						endcase
+					end
+					
+				end
+		
+			end
+		
 			else
 			begin
-				
+			
 				if (counter == 8)
 				begin
 					counter <= 4'b0000;
@@ -91,7 +119,7 @@ module fetch_instruction_memory(address, mem_in, instruction, hit, clk, rst);
 					cache [set][63:32] <= mem_in[63:32];
 					cache [set][95:64] <= mem_in[95:64];
 					cache [set][127:96] <= mem_in[127:96];
-					
+				
 					case(offset)
 						2'b00: instruction <= cache[set][31:0];
 						2'b01: instruction <= cache[set][63:32]; 
@@ -99,33 +127,12 @@ module fetch_instruction_memory(address, mem_in, instruction, hit, clk, rst);
 						2'b11: instruction <= cache[set][127:96];
 					endcase
 				end
-					
+				
 			end
-		
-		end
-		
-		else
-		begin
 			
-			if (counter == 8)
-			begin
-				counter <= 4'b0000;
-				cache[set][152] <= 1;
-				hit <= 1;
-				cache [set][31:0] <= mem_in[31:0];
-				cache [set][63:32] <= mem_in[63:32];
-				cache [set][95:64] <= mem_in[95:64];
-				cache [set][127:96] <= mem_in[127:96];
-				
-				case(offset)
-					2'b00: instruction <= cache[set][31:0];
-					2'b01: instruction <= cache[set][63:32]; 
-					2'b10: instruction <= cache[set][95:64];
-					2'b11: instruction <= cache[set][127:96];
-				endcase
-			end
-				
 		end
+		
+		
 		
 	end
 	

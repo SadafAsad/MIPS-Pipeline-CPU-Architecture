@@ -33,6 +33,11 @@ module fetch_add(add_in, add_out, hit);
 			add_out <= add_in + 1;
 		end
 		
+		else
+		begin
+			add_out <= add_in;
+		end
+		
 	end
 
 endmodule

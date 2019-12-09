@@ -46,7 +46,6 @@ module fetch_instruction_memory_test;
 
 	initial begin
 		// Initialize Inputs
-		address = 0;
 		mem_in = 0;
 		clk = 0;
 		rst = 1;

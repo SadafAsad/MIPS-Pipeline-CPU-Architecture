@@ -41,6 +41,19 @@ module fetch_instruction_memory(address, mem_in, instruction, hit, clk, rst);
 	
 	always @(posedge clk)
 	begin
+		
+		if (cache[set][152] != 1)
+		begin
+			if (counter != 8)
+			begin
+				counter = counter + 1;
+			end
+		end
+		
+	end
+	
+	always @(*)
+	begin
 	
 		cache[0] <= 153'b100000000000000000000000000000000000000000000000000000000000000000000000000000000000000001111111111111111111111111111111100000000000000000000000000000000;
 		cache[1] <=	153'b100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
@@ -87,11 +100,6 @@ module fetch_instruction_memory(address, mem_in, instruction, hit, clk, rst);
 					endcase
 				end
 					
-				else
-				begin
-					counter = counter + 1;
-				end
-					
 			end
 		
 		end
@@ -115,11 +123,6 @@ module fetch_instruction_memory(address, mem_in, instruction, hit, clk, rst);
 					2'b10: instruction <= cache[set][95:64];
 					2'b11: instruction <= cache[set][127:96];
 				endcase
-			end
-					
-			else
-			begin
-				counter = counter + 1;
 			end
 				
 		end

@@ -1,0 +1,14 @@
+
+
+
+// Instantiate the module
+fetch_instruction_memory instance_name (
+    .address(address), 
+    .mem_in(mem_in), 
+    .instruction(instruction), 
+    .hit(hit), 
+    .clk(clk), 
+    .rst(rst)
+    );
+
+

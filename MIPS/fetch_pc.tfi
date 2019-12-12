@@ -1,0 +1,12 @@
+
+
+
+// Instantiate the module
+fetch_pc instance_name (
+    .npc(npc), 
+    .clk(clk), 
+    .rst(rst), 
+    .pc(pc)
+    );
+
+

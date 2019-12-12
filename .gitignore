@@ -57,6 +57,7 @@
 *.ini
 *.sim
 *.html
+*.tfi
 
 .DS_Store
 

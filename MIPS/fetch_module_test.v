@@ -54,12 +54,14 @@ module fetch_module_test;
 		rst = 1;
 
 		// Wait 100 ns for global reset to finish
+		
 		#100;
 		rst = 0;
 		PCSrc = 0;
 		pc_branch = 0;
 		mem_in = 128'b11111111111111111111111111111111000000000000000000000000000000001111111111111111111111111111111100000000000000000111110000000000;
-        
+		
+         
 		// Add stimulus here
 
 	end

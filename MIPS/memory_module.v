@@ -25,15 +25,12 @@ module memory_module(AddResult, ALUResult, read_data2, exeMuxRes, aluZero,
 	
 	input MemRead, MemWrite, Branch;
 	input aluZero;
-	input [31:0] AddResult, ALUResult, read_data2, AddResult_out;
-	input [4:0] exeMuxRes;
+	input [31:0] ALUResult, read_data2;
 	
-	output [4:0] exeMuxRes_out;
 	output [31:0] ReadData;
 	output PCSrc_out;
 	
 	assign exeMuxRes_out = exeMuxRes;
-	assign ALUResult_out = ALUResult;
 
 	memory_and And (
     .branch(Branch), 

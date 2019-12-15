@@ -61,7 +61,13 @@ module mips_module(clk, rst, instruction_mem_in);
 	wire [4:0] ex_mux2_to_ex_mem;
 	
 	wire ex_mem_MemtoReg_to_mem_wb, ex_mem_RegWrite_to_mem_wb;
-
+	wire ex_mem_branch_to_mem_and;
+	wire ex_mem_MemRead_to_mem_data_memory;
+	wire ex_mem_MemWrite_to_mem_data_memory;
+	wire ex_mem_zero_to_mem_and;
+	wire [31:0] ex_mem_alu_result_to_mem_address_data_memory;
+	wire [31:0] ex_mem_read_data2_to_mem_write_data_data_memory;
+ 
 	fetch_module Fetch (
     .clk(clk), 
     .rst(rst), 
@@ -171,27 +177,27 @@ module mips_module(clk, rst, instruction_mem_in);
     .aluout(ex_alu_result_to_ex_mem), 
     .readdat2(id_ex_read_data2_to_ex_alu_and_to_ex_mem), 
     .muxout(ex_mux2_to_ex_mem), 
-    .Branch_out(Branch_out), 
-    .MemRead_out(MemRead_out), 
-    .MemWrite_out(MemWrite_out), 
+    .Branch_out(ex_mem_branch_to_mem_and), 
+    .MemRead_out(ex_mem_MemRead_to_mem_data_memory), 
+    .MemWrite_out(ex_mem_MemWrite_to_mem_data_memory), 
     .RegWrite_out(ex_mem_RegWrite_to_mem_wb), 
     .MemtoReg_out(ex_mem_MemtoReg_to_mem_wb), 
-    .zero(zero), 
+    .zero(ex_mem_zero_to_mem_and), 
     .add_result(mem_add_result_branch_to_fetch), 
-    .alu_result(alu_result), 
-    .rdata2out(rdata2out), 
+    .alu_result(ex_mem_alu_result_to_mem_address_data_memory), 
+    .rdata2out(ex_mem_read_data2_to_mem_write_data_data_memory), 
     .five_bit_muxout(five_bit_muxout)
     );
 	 
 	 memory_module Memory (
     .AddResult(AddResult), 
-    .ALUResult(ALUResult), 
-    .read_data2(read_data2), 
+    .ALUResult(ex_mem_alu_result_to_mem_address_data_memory), 
+    .read_data2(ex_mem_read_data2_to_mem_write_data_data_memory), 
     .exeMuxRes(exeMuxRes), 
-    .aluZero(aluZero), 
-    .MemRead(MemRead), 
-    .MemWrite(MemWrite), 
-    .Branch(Branch), 
+    .aluZero(ex_mem_zero_to_mem_and), 
+    .MemRead(ex_mem_MemRead_to_mem_data_memory), 
+    .MemWrite(ex_mem_MemWrite_to_mem_data_memory), 
+    .Branch(ex_mem_branch_to_mem_and), 
     .exeMuxRes_out(exeMuxRes_out), 
     .ReadData(ReadData), 
     .AddResult_out(AddResult_out),

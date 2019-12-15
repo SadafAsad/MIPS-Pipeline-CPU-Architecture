@@ -19,23 +19,21 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module memory_module(AddResult, ALUResult, read_data2, exeMuxRes, aluZero,
-							MemtoReg, RegWrite, MemRead, MemWrite, Branch,
+							MemRead, MemWrite, Branch,
 							exeMuxRes_out, ReadData, AddResult_out,
 							RegWrite_out, MemtoReg_out, PCSrc_out);
 	
-	input MemtoReg, RegWrite, MemRead, MemWrite, Branch;
+	input MemRead, MemWrite, Branch;
 	input aluZero;
 	input [31:0] AddResult, ALUResult, read_data2, AddResult_out;
 	input [4:0] exeMuxRes;
 	
 	output [4:0] exeMuxRes_out;
 	output [31:0] ReadData;
-	output RegWrite_out, MemtoReg_out, PCSrc_out;
+	output PCSrc_out;
 	
 	assign exeMuxRes_out = exeMuxRes;
 	assign ALUResult_out = ALUResult;
-	assign RegWrite_out = RegWrite;
-	assign MemtoReg_out = MemtoReg;
 
 	memory_and And (
     .branch(Branch), 

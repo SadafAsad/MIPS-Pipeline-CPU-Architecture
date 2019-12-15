@@ -58,6 +58,9 @@ module mips_module(clk, rst, instruction_mem_in);
 	wire [31:0] ex_add_result_to_ex_mem;
 	wire [31:0] ex_alu_result_to_ex_mem;
 	wire ex_alu_zero_to_ex_mem;
+	wire [4:0] ex_mux2_to_ex_mem;
+	
+	wire ex_mem_MemtoReg_to_mem_wb, ex_mem_RegWrite_to_mem_wb;
 
 	fetch_module Fetch (
     .clk(clk), 
@@ -151,7 +154,7 @@ module mips_module(clk, rst, instruction_mem_in);
     .add_result(ex_add_result_to_ex_mem), 
     .alu_result(ex_alu_result_to_ex_mem), 
     .read_data2_out(id_ex_read_data2_to_ex_alu_and_to_ex_mem), 
-    .mux_out(mux_out), 
+    .mux_out(ex_mux2_to_ex_mem), 
     .zero_out(ex_alu_zero_to_ex_mem)
     );
 
@@ -167,12 +170,12 @@ module mips_module(clk, rst, instruction_mem_in);
     .aluzero(ex_alu_zero_to_ex_mem), 
     .aluout(ex_alu_result_to_ex_mem), 
     .readdat2(id_ex_read_data2_to_ex_alu_and_to_ex_mem), 
-    .muxout(muxout), 
+    .muxout(ex_mux2_to_ex_mem), 
     .Branch_out(Branch_out), 
     .MemRead_out(MemRead_out), 
     .MemWrite_out(MemWrite_out), 
-    .RegWrite_out(RegWrite_out), 
-    .MemtoReg_out(MemtoReg_out), 
+    .RegWrite_out(ex_mem_RegWrite_to_mem_wb), 
+    .MemtoReg_out(ex_mem_MemtoReg_to_mem_wb), 
     .zero(zero), 
     .add_result(mem_add_result_branch_to_fetch), 
     .alu_result(alu_result), 
@@ -186,24 +189,20 @@ module mips_module(clk, rst, instruction_mem_in);
     .read_data2(read_data2), 
     .exeMuxRes(exeMuxRes), 
     .aluZero(aluZero), 
-    .MemtoReg(MemtoReg), 
-    .RegWrite(RegWrite), 
     .MemRead(MemRead), 
     .MemWrite(MemWrite), 
     .Branch(Branch), 
     .exeMuxRes_out(exeMuxRes_out), 
     .ReadData(ReadData), 
-    .AddResult_out(AddResult_out), 
-    .RegWrite_out(RegWrite_out), 
-    .MemtoReg_out(MemtoReg_out), 
+    .AddResult_out(AddResult_out),
     .PCSrc_out(mem_and_pcsrc_to_fetch)
     );
 
 	memory_pipe MEM_WB (
     .clk(clk), 
     .rst(rst), 
-    .RegWrite(RegWrite), 
-    .MemtoReg(MemtoReg), 
+    .RegWrite(ex_mem_RegWrite_to_mem_wb), 
+    .MemtoReg(ex_mem_MemtoReg_to_mem_wb), 
     .read_data_in(read_data_in), 
     .alu_result_in(alu_result_in), 
     .write_reg_in(write_reg_in), 

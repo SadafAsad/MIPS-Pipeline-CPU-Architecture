@@ -19,11 +19,9 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module execution_module(RegDst, ALUOp1, ALUOp2, ALUSrc, fromIFstage, sign_extended, read_data1, read_data2, inst_20_16, inst_15_11,
-								MemtoReg, RegWrite, MemRead, MemWrite, Branch,
 								add_result, alu_result, read_data2_out, mux_out, zero_out,
 								MemtoReg_out, RegWrite_out, MemRead_out, MemWrite_out, Branch_out);
 
-	input MemtoReg, RegWrite, MemRead, MemWrite, Branch;
 	input RegDst, ALUSrc;
 	input ALUOp1, ALUOp2;
 	input [31:0] fromIFstage, read_data1, read_data2, sign_extended;
@@ -32,7 +30,6 @@ module execution_module(RegDst, ALUOp1, ALUOp2, ALUSrc, fromIFstage, sign_extend
 	output zero_out;
 	output [31:0] add_result, alu_result, read_data2_out;
 	output [4:0] mux_out;
-	output MemtoReg_out, RegWrite_out, MemRead_out, MemWrite_out, Branch_out;
 	
 	wire [31:0] shift_to_add;
 	wire [31:0] mux_1_to_alu;
@@ -43,13 +40,6 @@ module execution_module(RegDst, ALUOp1, ALUOp2, ALUSrc, fromIFstage, sign_extend
 	assign ALUOp[0] = ALUOp1;
 	assign ALUOp[1] = ALUOp2;
 	assign alu_control_funct = sign_extended[5:0];
-	
-	assign MemtoReg_out = MemtoReg;
-	assign RegWrite_out = RegWrite;
-	assign MemRead_out = MemRead;
-	assign MemWrite_out = MemWrite;
-	assign Branch_out = Branch;
-	assign read_data2_out = read_data2;
 
 	execution_adder Add (
     .add_in1(fromIFstage), 

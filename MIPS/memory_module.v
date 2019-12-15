@@ -18,19 +18,18 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module memory_module(AddResult, ALUResult, read_data2, exeMuxRes, aluZero,
+module memory_module(ALUResult, read_data2, aluZero,
 							MemRead, MemWrite, Branch,
-							exeMuxRes_out, ReadData, AddResult_out,
-							RegWrite_out, MemtoReg_out, PCSrc_out);
+							ReadData,PCSrc_out, ALUResult_out);
 	
 	input MemRead, MemWrite, Branch;
 	input aluZero;
-	input [31:0] ALUResult, read_data2;
+	input [31:0] read_data2, ALUResult;
 	
-	output [31:0] ReadData;
+	output [31:0] ReadData, ALUResult_out;
 	output PCSrc_out;
 	
-	assign exeMuxRes_out = exeMuxRes;
+	assign ALUResult_out = ALUResult;
 
 	memory_and And (
     .branch(Branch), 

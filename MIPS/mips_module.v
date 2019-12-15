@@ -65,9 +65,14 @@ module mips_module(clk, rst, instruction_mem_in);
 	wire ex_mem_MemRead_to_mem_data_memory;
 	wire ex_mem_MemWrite_to_mem_data_memory;
 	wire ex_mem_zero_to_mem_and;
-	wire [31:0] ex_mem_alu_result_to_mem_address_data_memory;
+	wire [31:0] ex_mem_alu_result_to_mem_address_data_memory_and_mem_wb;
 	wire [31:0] ex_mem_read_data2_to_mem_write_data_data_memory;
- 
+	wire [4:0] ex_mem_mux2_to_mem_wb;
+	wire [31:0] mem_read_data_to_mem_wb;
+	
+	wire mem_wb_MemtoReg_to_wb;
+	wire [31:0] mem_wb_readData_to_wb, mem_wb_alu_result_to_wb;
+	
 	fetch_module Fetch (
     .clk(clk), 
     .rst(rst), 
@@ -186,22 +191,19 @@ module mips_module(clk, rst, instruction_mem_in);
     .add_result(mem_add_result_branch_to_fetch), 
     .alu_result(ex_mem_alu_result_to_mem_address_data_memory), 
     .rdata2out(ex_mem_read_data2_to_mem_write_data_data_memory), 
-    .five_bit_muxout(five_bit_muxout)
+    .five_bit_muxout(ex_mem_mux2_to_mem_wb)
     );
 	 
 	 memory_module Memory (
-    .AddResult(AddResult), 
-    .ALUResult(ex_mem_alu_result_to_mem_address_data_memory), 
-    .read_data2(ex_mem_read_data2_to_mem_write_data_data_memory), 
-    .exeMuxRes(exeMuxRes), 
+    .ALUResult(ex_mem_alu_result_to_mem_address_data_memory_and_mem_wb), 
+    .read_data2(ex_mem_read_data2_to_mem_write_data_data_memory),
     .aluZero(ex_mem_zero_to_mem_and), 
     .MemRead(ex_mem_MemRead_to_mem_data_memory), 
     .MemWrite(ex_mem_MemWrite_to_mem_data_memory), 
-    .Branch(ex_mem_branch_to_mem_and), 
-    .exeMuxRes_out(exeMuxRes_out), 
-    .ReadData(ReadData), 
-    .AddResult_out(AddResult_out),
-    .PCSrc_out(mem_and_pcsrc_to_fetch)
+    .Branch(ex_mem_branch_to_mem_and),
+    .ReadData(mem_read_data_to_mem_wb),
+    .PCSrc_out(mem_and_pcsrc_to_fetch),
+	 .ALUResult_out(ex_mem_alu_result_to_mem_address_data_memory_and_mem_wb)
     );
 
 	memory_pipe MEM_WB (
@@ -209,20 +211,20 @@ module mips_module(clk, rst, instruction_mem_in);
     .rst(rst), 
     .RegWrite(ex_mem_RegWrite_to_mem_wb), 
     .MemtoReg(ex_mem_MemtoReg_to_mem_wb), 
-    .read_data_in(read_data_in), 
-    .alu_result_in(alu_result_in), 
-    .write_reg_in(write_reg_in), 
+    .read_data_in(mem_read_data_to_mem_wb), 
+    .alu_result_in(ex_mem_alu_result_to_mem_address_data_memory_and_mem_wb), 
+    .write_reg_in(ex_mem_mux2_to_mem_wb), 
     .RegWrite_out(wb_WriteRegister_to_decode), 
-    .MemtoReg_out(MemtoReg_out), 
-    .read_data(read_data), 
-    .mem_alu_result(mem_alu_result), 
+    .MemtoReg_out(mem_wb_MemtoReg_to_wb), 
+    .read_data(mem_wb_readData_to_wb), 
+    .mem_alu_result(mem_wb_alu_result_to_wb), 
     .mem_write_reg(wb_WriteRegister_to_decode)
     );
 	 
 	 write_back_mux Write_back (
-    .data(data), 
-    .address(address), 
-    .MemtoReg(MemtoReg), 
+    .data(mem_wb_readData_to_wb), 
+    .address(mem_wb_alu_result_to_wb), 
+    .MemtoReg(mem_wb_MemtoReg_to_wb), 
     .writeData(wb_WriteData_to_decode)
     );
 

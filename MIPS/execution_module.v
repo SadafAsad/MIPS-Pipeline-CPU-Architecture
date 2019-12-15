@@ -19,8 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module execution_module(RegDst, ALUOp1, ALUOp2, ALUSrc, fromIFstage, sign_extended, read_data1, read_data2, inst_20_16, inst_15_11,
-								add_result, alu_result, read_data2_out, mux_out, zero_out,
-								MemtoReg_out, RegWrite_out, MemRead_out, MemWrite_out, Branch_out);
+								add_result, alu_result, read_data2_out, mux_out, zero_out);
 
 	input RegDst, ALUSrc;
 	input ALUOp1, ALUOp2;

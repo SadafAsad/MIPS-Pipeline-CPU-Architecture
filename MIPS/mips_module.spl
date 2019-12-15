@@ -1,0 +1,9 @@
+[Inputs]
+clk
+rst
+=instruction_mem_in[127:0]=
+[Outputs]
+[BiDir]
+[ATTRIBUTES]
+VeriModel mips_module
+

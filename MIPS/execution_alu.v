@@ -39,7 +39,7 @@ module execution_alu(A, B, control, result, zero);
 					end
 					else
 					begin
-						zero = 1;
+						zero <= 1;
 					end
 				end
 				3'b110:
